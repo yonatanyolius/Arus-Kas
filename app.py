@@ -199,7 +199,6 @@ st.image(
     width="stretch",
 )
 st.title("Kas Dokter Umum Soerojo Hospital")
-st.write("Pemasukan, pengeluaran, dan saldo kas real-time.")
 
 if "data_kas" not in st.session_state:
   st.session_state.data_kas = df_bersih
