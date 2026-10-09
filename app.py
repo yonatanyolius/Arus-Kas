@@ -194,9 +194,13 @@ df_bersih = pd.DataFrame(data_asli)
 st.set_page_config(
     page_title="Aplikasi Arus Kas", page_icon="💰", layout="centered"
 )
-
-st.title("💰 Aplikasi Pencatatan Arus Kas")
-st.write("Pantau pemasukan, pengeluaran, dan saldo kas secara real-time.")
+st.image(
+    "https://soerojohospital.go.id/img/rawat-jalan/soerojo_hospital.png",
+    width="stretch",
+    caption="KAS KITA ",
+)
+st.title("💰 Kas Dokter Umum Soerojo Hospital")
+st.write("Pemasukan, pengeluaran, dan saldo kas real-time.")
 
 if "data_kas" not in st.session_state:
   st.session_state.data_kas = df_bersih
