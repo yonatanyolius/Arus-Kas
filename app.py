@@ -247,6 +247,27 @@ st.dataframe(df, width="stretch")
 
 st.download_button(
     label="📥 Unduh Data ke CSV",
+
+    # --- FITUR HAPUS TRANSAKSI TERAKHIR / BERDASARKAN NOMOR BARIS ---
+st.sidebar.markdown("---")
+st.sidebar.header("❌ Koreksi / Hapus Transaksi")
+
+if len(st.session_state.data_kas) > 0:
+  # Pilihan nomor baris data yang ingin dihapus
+  indeks_hapus = st.sidebar.number_input(
+      "Nomor Baris (Index) yang ingin dihapus",
+      min_value=0,
+      max_value=len(st.session_state.data_kas) - 1,
+      step=1,
+  )
+
+  if st.sidebar.button("Hapus Baris Terpilih"):
+    st.session_state.data_kas = (
+        st.session_state.data_kas.drop(indeks_hapus)
+        .reset_index(drop=True)
+    )
+    st.sidebar.success(f"Baris ke-{indeks_hapus} berhasil dihapus!")
+    st.rerun()  # Memuat ulang halaman agar tabel langsung terupdate
     data=df.to_csv(index=False).encode("utf-8"),
     file_name="rekap_arus_kas.csv",
     mime="text/csv",
