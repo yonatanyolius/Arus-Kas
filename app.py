@@ -197,9 +197,8 @@ st.set_page_config(
 st.image(
     "https://soerojohospital.go.id/img/rawat-jalan/soerojo_hospital.png",
     width="stretch",
-    caption="KAS KITA ",
 )
-st.title("💰 Kas Dokter Umum Soerojo Hospital")
+st.title("Kas Dokter Umum Soerojo Hospital")
 st.write("Pemasukan, pengeluaran, dan saldo kas real-time.")
 
 if "data_kas" not in st.session_state:
