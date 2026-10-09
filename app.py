@@ -1,6 +1,18 @@
 import pandas as pd
 import streamlit as st
 
+# Konfigurasi Halaman
+st.set_page_config(
+    page_title="Aplikasi Arus Kas", page_icon="💰", layout="centered"
+)
+
+# Gambar Header RSJ Soerojo
+st.image(
+    "https://soerojohospital.go.id/img/rawat-jalan/soerojo_hospital.png",
+    width="stretch",
+)
+st.title("Kas Dokter Umum Soerojo Hospital")
+
 # Data Arus Kas Terintegrasi
 data_asli = {
     "Tanggal": [
@@ -191,15 +203,6 @@ data_asli = {
 
 df_bersih = pd.DataFrame(data_asli)
 
-st.set_page_config(
-    page_title="Aplikasi Arus Kas", page_icon="💰", layout="centered"
-)
-st.image(
-    "https://soerojohospital.go.id/img/rawat-jalan/soerojo_hospital.png",
-    width="stretch",
-)
-st.title("Kas Dokter Umum Soerojo Hospital")
-
 if "data_kas" not in st.session_state:
   st.session_state.data_kas = df_bersih
 
@@ -234,7 +237,6 @@ st.sidebar.markdown("---")
 st.sidebar.header("❌ Koreksi / Hapus Transaksi")
 
 if len(st.session_state.data_kas) > 0:
-  # Pilihan nomor baris data yang ingin dihapus
   indeks_hapus = st.sidebar.number_input(
       "Nomor Baris (Index) yang ingin dihapus",
       min_value=0,
@@ -248,7 +250,8 @@ if len(st.session_state.data_kas) > 0:
         .reset_index(drop=True)
     )
     st.sidebar.success(f"Baris ke-{indeks_hapus} berhasil dihapus!")
-    st.rerun()  # Memuat ulang halaman agar tabel langsung terupdate
+    st.rerun()
+
 # Ringkasan Saldo Utama
 df = st.session_state.data_kas
 total_masuk = df["Pemasukan"].sum()
@@ -265,6 +268,11 @@ st.markdown("---")
 st.subheader("📋 Riwayat Arus Kas")
 st.dataframe(df, width="stretch")
 
+# Tombol Download ke CSV yang Diperbaiki
+csv_data = df.to_csv(index=False)
 st.download_button(
     label="📥 Unduh Data ke CSV",
+    data=csv_data,
+    file_name="rekap_arus_kas_soerojo.csv",
+    mime="text/csv",
 )
