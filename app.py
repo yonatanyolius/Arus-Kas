@@ -229,26 +229,7 @@ with st.sidebar.form("form_tambah"):
     )
     st.sidebar.success("Transaksi berhasil ditambahkan!")
 
-# Ringkasan Saldo Utama
-df = st.session_state.data_kas
-total_masuk = df["Pemasukan"].sum()
-total_keluar = df["Pengeluaran"].sum()
-saldo_akhir = total_masuk - total_keluar
-
-c1, c2, c3 = st.columns(3)
-c1.metric("Total Pemasukan", f"Rp {total_masuk:,.0f}")
-c2.metric("Total Pengeluaran", f"Rp {total_keluar:,.0f}")
-c3.metric("SALDO AKHIR", f"Rp {saldo_akhir:,.0f}")
-
-st.markdown("---")
-
-st.subheader("📋 Riwayat Arus Kas")
-st.dataframe(df, width="stretch")
-
-st.download_button(
-    label="📥 Unduh Data ke CSV",
-
-    # --- FITUR HAPUS TRANSAKSI TERAKHIR / BERDASARKAN NOMOR BARIS ---
+# --- FITUR HAPUS TRANSAKSI TERAKHIR / BERDASARKAN NOMOR BARIS ---
 st.sidebar.markdown("---")
 st.sidebar.header("❌ Koreksi / Hapus Transaksi")
 
@@ -268,7 +249,22 @@ if len(st.session_state.data_kas) > 0:
     )
     st.sidebar.success(f"Baris ke-{indeks_hapus} berhasil dihapus!")
     st.rerun()  # Memuat ulang halaman agar tabel langsung terupdate
-    data=df.to_csv(index=False).encode("utf-8"),
-    file_name="rekap_arus_kas.csv",
-    mime="text/csv",
-)
+# Ringkasan Saldo Utama
+df = st.session_state.data_kas
+total_masuk = df["Pemasukan"].sum()
+total_keluar = df["Pengeluaran"].sum()
+saldo_akhir = total_masuk - total_keluar
+
+c1, c2, c3 = st.columns(3)
+c1.metric("Total Pemasukan", f"Rp {total_masuk:,.0f}")
+c2.metric("Total Pengeluaran", f"Rp {total_keluar:,.0f}")
+c3.metric("SALDO AKHIR", f"Rp {saldo_akhir:,.0f}")
+
+st.markdown("---")
+
+st.subheader("📋 Riwayat Arus Kas")
+st.dataframe(df, width="stretch")
+
+st.download_button(
+    label="📥 Unduh Data ke CSV",
+
